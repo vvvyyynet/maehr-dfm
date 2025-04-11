@@ -1,0 +1,1884 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{5}
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Inhaltsverzeichnis}
+\else
+  \newcommand\contentsname{Inhaltsverzeichnis}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{Abbildungsverzeichnis}
+\else
+  \newcommand\listfigurename{Abbildungsverzeichnis}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{Tabellenverzeichnis}
+\else
+  \newcommand\listtablename{Tabellenverzeichnis}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Abbildung}
+\else
+  \newcommand\figurename{Abbildung}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Tabelle}
+\else
+  \newcommand\tablename{Tabelle}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{Listingverzeichnis}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\ifLuaTeX
+\usepackage[bidi=basic]{babel}
+\else
+\usepackage[bidi=default]{babel}
+\fi
+\babelprovide[main,import]{nswissgerman}
+% get rid of language-specific shorthands (see #6817):
+\let\LanguageShortHands\languageshorthands
+\def\languageshorthands#1{}
+\ifLuaTeX
+  \usepackage[german]{selnolig} % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Handbuch zur Erstellung diskriminierungssensibler Metadaten für historische Quellen und Forschungsdaten},
+  pdflang={de-CH},
+  pdfkeywords={Diskriminierungssensible Metadaten, Diskriminierungsfreie
+Metadaten, Historische Quellen und
+Forschungsdaten, FAIR-Prinzipien, CARE-Prinzipien, Datenethik, Stadt.Geschichte.Basel, Open
+Research Data, Code of Conduct, Dublin Core, Schlagwortindex
+GenderOpen},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Handbuch zur Erstellung diskriminierungssensibler Metadaten für
+historische Quellen und Forschungsdaten}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Schlüsselbegriffe und Erfahrungen aus der Praxis}
+\author{Levyn Bürki \and Moritz Mähr \and Noëlle Schnegg}
+\date{2024-10-31}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+Dieses Handbuch ist ein Leitfaden zur Erstellung von
+diskriminierungssensibler Metadaten für historische Quellen und
+Forschungsdaten. Es richtet sich an Historiker*innen, Archivar*innen,
+Bibliothekar*innen und alle, die sich mit Datenethik und Open Research
+Data in den Geschichtswissenschaften beschäftigen. Die Autor*innen Levyn
+Bürki, Moritz Mähr und Noëlle Schnegg führen durch die praktischen
+Aspekte der Erstellung von Metadaten, basierend auf den FAIR- und
+CARE-Prinzipien, um Forschungsdaten auffindbar, zugänglich,
+interoperabel und nachnutzbar zu machen. Durch praktische Anleitungen
+und illustrierte Fallbeispiele zeigt das Handbuch, wie maschinenlesbare
+Metadaten Forschung und Lehre bereichern und die Interpretation
+historischer Quellen beeinflussen können. Als öffentlich zugängliches
+``Living Document'' ist es auf eine kontinuierliche Weiterentwicklung
+durch die Community ausgelegt und verpflichtet sich zu einer inklusiven
+und diskriminierungsfreien Darstellung historischer Inhalte. Das
+Handbuch ist eine grundlegende Ressource für alle, die sich mit moderner
+digitaler Geschichtswissenschaft und Open Research Data beschäftigen
+wollen.
+\end{abstract}
+
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Content Note}, colback=white, colframe=quarto-callout-warning-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+Dieses Dokument enthält Abbildungen von historischen Quellen, die
+diskriminierende Sprache, Bilder oder Darstellungen enthalten. Sie sind
+Ausdruck von Vorurteilen, Stereotypen oder Gewalt gegen bestimmte
+Gruppen in der Vergangenheit.
+
+\end{tcolorbox}
+
+\section{Einleitung}\label{einleitung}
+
+\begin{itemize}
+\item
+  \textbf{Warum dieses Handbuch?}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \emph{Aktualität Thema:}
+  \item
+    \emph{Abgrenzung zu anderen Projekten/Leitfäden/Handbüchern:}
+  \item
+    \emph{Zielgruppe:} Das Handbuch richtet sich an
+    Historiker\emph{innen, Archivar}innen, Bibliothekar*innen und alle,
+    die sich mit Open Research Data in den Geschichtswissenschaften
+    beschäftigen.
+  \end{itemize}
+\item
+  \textbf{Entstehungskontext}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Eine erste Auflage dieses Handbuchs entstand im Rahmen des
+    historischen Forschungsprojekts \emph{Stadt.Geschichte.Basel} und
+    wurde im Juni 2024 von Moritz Mähr und Noëlle Schnegg publiziert.
+    Gemeinsam mit Levyn Bürki wurde das Handbuch ab Herbst 2024
+    schliesslich neu strukturiert und überarbeitet.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Einarbeitung des Feedbacks aus der Erstveröffentlichung sowie von
+      Diskussionen, welche seither an Workshops und Konferenzen geführt.
+    \item
+      Titeländerung
+    \item
+      Eigene Positionalität
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Problemdefinitionen}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Diskriminierungsbegriff und Datenethik:}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Diskriminierung kann viele Formen annehmen und geht über
+      diskriminierendes Vokabular hinaus.
+    \item
+      Darunter Rassismus, Antisemitismus, Sexismus, Ableismus,
+      Transphobie und viele andere, und sie kann mehrere
+      Diskriminierungsformen gleichzeitig enthalten
+      (Intersektionalität).
+    \item
+      Sie kann explizit oder implizit sein und ist oft tief in den
+      Kontext und die Interpretation dieser Ressourcen eingebettet.
+    \item
+      Implizite oder strukturelle Formen von Diskriminierung finden sich
+      in vielen bestehenden Thesauri und Schlagwortverzeichnissen wie
+      der Gemeinsamen Normdatei (GND), der am weitesten verbreiteten
+      Normdatei im deutschsprachigen Raum.
+    \item
+      Durch Basisfelder, Klassifizierung nach hegemonialer Praxis,
+      \ldots{} Bei einem Textfeld geht es immer auch darum, was es
+      \emph{kann}: wie wird es ausgelesen? Interpretiert? Dargestellt?
+      Übermittlet? Dokumentiert?
+    \item
+      Sie stecken aber auch in institutionellen Strukturen/Bias,
+      kolonialen Sammlungskonzepten, \ldots{}
+    \item
+      Schliesslich sind auch Aspekte des Datenschutz und
+      Selbstbestimmung ein wesentlicher Teil eines
+      diskriminierungssensiblen Umgangs mit Daten und Metadaten. Im
+      Kontext indigener Daten existieren dazu bereits die
+      CARE-Prinzipien, welche auch für andere Kontexte, etwa den Umgang
+      mit Daten aus nationalsozialistischen Kontexten wegweisend sein
+      können. Datenethische Grundsätze (Do-no-harm Prinzip,
+      Schadensminimierung, Collectiv benefit).
+    \item
+      Unter diskriminierungssensiblem Arbeiten an und mit Archiv- und
+      Forschungsdaten verstehen wir unmittelbar auch eine Arbeit an
+      Forschungsdatenqualität.
+    \end{itemize}
+  \item
+    \textbf{Beispiele, Fragen und Konfliktlinien:} Inhaltlich,
+    strukturell, technisch und politisch:
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Wie können Metadaten transparent gestaltet (etwa hinsichtlich
+      Versionierung und Autor:innenschaft) und wie können
+      Entscheidungsprozesse dokumentiert werden?
+    \item
+      Wie soll mit Zielkonflikten (etwa mit Förderrichtlinien)
+      umgegangen werden?
+    \item
+      Wie gelingt diskriminierungssensibler Umgang mit Metadaten mit
+      Blick auf limitierte Ressourcen?
+    \item
+      Umgang mit KI im Kontext der Metadatenerstellung und -verarbeitung
+    \item
+      DMPs
+    \item
+      Wie können Arbeitsprozesse diskriminierungssensibel gestaltet
+      werden -- von der Sensibilisierung, Schulung und Diversifizierung
+      von Teams, der Entwicklung von Tools, \ldots{}
+    \item
+      Wie kann diskriminierungssensible Arbeit in Forschung, Sammlungen
+      und Archiven vor politischer Einflussnahme geschützt und
+      verteidigt werden?
+    \item
+      Was muss bei der Veröffentlichung und Vermittlung beachtet werden
+      um diskriminierender Strukturen nicht zu reproduzieren?
+    \item
+      Kontrollverlust der Darstellung beim Publizieren der Daten auf
+      externen Plattformen und Repositorien
+    \item
+      Wie kann diskriminierendes Vokabular überwunden werden ohne
+      historische Quellen zu verfälschen und auch künftig historische
+      Forschung nach bestimmten Begriffen zu ermöglichen?
+    \item
+      Umgang mit Lücken, Unsicherheiten und Widersprüchen in Daten,
+      insbesondere bei Massenerschliessungen, wo es auch darum gehen
+      muss, systematische Fehler zu limitieren.
+    \item
+      \ldots{}
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Aufbau, Fokus und Verwendungshinweise:} Was das Handbuch
+  \emph{ist} -- und was es \emph{nicht ist}. Wie verwende ich das
+  Handbuch? Was kann ich erwarten? Ist dieses Handbuch für mich?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Ziel:} Ziel muss es sein, diskriminierende Strukturen nicht
+    nur aufzeigen, sondern diese zu überwinden. Dazu braucht es einen
+    Austausch über Lösungsansätze genauso wie über bestehende Hürden und
+    Unsicherheiten. Hierzu möchte das vorliegende Handbuch einen Beitrag
+    leisten. Dazu sammelt es Erfahrungswissen zum
+    diskriminierungssensiblen Umgang mit Metadaten in
+    Forschungskontexten und gibt diese weiter. Um möglichst vielen
+    Menschen zugänglich zu sein, werden in einem ersten Teil wichtige
+    Schlüsselbegriffe eingeführt. Ein zweiter Teil versammelt
+    schliesslich Praxiswissen aus verschiedenen thematischen,
+    strukturellen und institutionellen Kontexten.
+  \item
+    \textbf{Metadaten-Lebenszyklus:} Erstellung / Verwendung /
+    Vermittlung usw.
+  \item
+    \textbf{Diskriminierungs-Kontexte:} Essenzialisierung, Bias, Lücken
+    und Unsichtbarmachung, Fehlende Perspektiven durch
+    Unwissen/Ignorance, ethische Konflikte bei sensiblen Daten,
+    institutionalisierte Strukturen im Arbeitsalltag,\ldots{}
+  \item
+    \textbf{Umgang:} Wünschenswert sind auch Beiträge, wie
+    diskriminierende Metadaten nicht nur erkannt, sondern auch
+    angesprochen und beseitigt/vermieden/überwunden werden können --
+    nicht zuletzt im Kontext von Förderrichtlinien oder Teaminternen
+    Spannungen.
+  \item
+    \textbf{Spezifität und Pragmatismus:} Die im Handbuch versammelten
+    Empfehlungen müssen freilich auf den Kontext spezifischer
+    Institutions-, Sammlungs- und Forschungskontexte angepasst werden.
+    Durch einen modularen Aufbau mit verschiednene Perspektiven und
+    Beispielen versucht das Handbuch den heterogenen Ansprüchen und
+    Verwendungskontexten Rechnung zu tragen.
+  \item
+    \textbf{Boxen mit Erfahrungen und Fallbeispielen:} Der modulare
+    Aufbau soll es ermöglichen, verschiedene Stimmen aus dem Forschungs-
+    und Sammlungskontext, sowie aus Public History Projekten zu
+    versammeln und Erfahrungen und Lösungsansätze zu teilen.
+  \item
+    \textbf{Living Document:} Das Handbuch ist als kostenloses und
+    öffentlich zugängliches Living Document konzipiert und soll von der
+    Community auf dem öffentlichen Code-Repositorium weiterentwickelt
+    werden.
+  \item
+    \textbf{Code of Conduct:}
+    \href{https://www.contributor-covenant.org/version/2/1/code_of_conduct/}{Contributor
+    Covenant Code of Conduct}
+  \end{itemize}
+\end{itemize}
+
+\textbf{Dank:} - Ggf. hier Personen verdanken, die Inputs und Beispiele
+geliefert und gegengelesen haben.
+
+\section{Schlüsselbegriffe}\label{schluxfcsselbegriffe}
+
+\subsection{Diskriminierung in Daten und
+Datensätzen}\label{diskriminierung-in-daten-und-datensuxe4tzen}
+
+\subsection{Forschungsdaten}\label{forschungsdaten}
+
+\subsection{Metadaten}\label{metadaten}
+
+\subsubsection{Was sind Metadaten?}\label{was-sind-metadaten}
+
+\begin{itemize}
+\tightlist
+\item
+  Beispiele und Abgrenzung zu \emph{Daten} und \emph{Paradaten}.
+\item
+  Was ist ein Metadatenobjekt?
+\item
+  Was ist ein zugeordnete Ressource?
+\item
+  Können verschieden zueinander im Verhältnis stehen -- in beiden Fällen
+  kann es zu Diskriminierung/Bias kommen.
+\end{itemize}
+
+\subsubsection{Verhältnis von Metadatenobjekten und zugeordneten
+Ressourcen}\label{verhuxe4ltnis-von-metadatenobjekten-und-zugeordneten-ressourcen}
+
+\paragraph{Ein Metadatenobjekt mit einer zugeordneten
+Ressource}\label{ein-metadatenobjekt-mit-einer-zugeordneten-ressource}
+
+\paragraph{Ein Metadatenobjekt mit drei zugeordneten Ressourcen
+(Triptychon)}\label{ein-metadatenobjekt-mit-drei-zugeordneten-ressourcen-triptychon}
+
+\paragraph{Ein Metadatenobjekt mit drei verschiedenen zugeordneten
+Ressourcen}\label{ein-metadatenobjekt-mit-drei-verschiedenen-zugeordneten-ressourcen}
+
+\paragraph{Zwei Metadatenobjekte mit derselben zugeordneten
+Ressource}\label{zwei-metadatenobjekte-mit-derselben-zugeordneten-ressource}
+
+\subsubsection{Standards}\label{standards}
+
+\begin{itemize}
+\tightlist
+\item
+  Festhalten: Es existieren verschiedene Standards\ldots{} Fokus hier
+  (vorerst) auf Dublin Core
+\end{itemize}
+
+\paragraph{Schemas / Strukturstandard}\label{schemas-strukturstandard}
+
+\begin{itemize}
+\tightlist
+\item
+  Dublin Core Metadata Element Set
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tipp der Stadt.Geschichte.Basel}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+Verweis auf Anhang mit Tabellen der Metadaten der Stadt.Geschichte.Basel
+
+\end{tcolorbox}
+
+\paragraph{Formatstandard}\label{formatstandard}
+
+\begin{itemize}
+\tightlist
+\item
+  XML/RDF
+\end{itemize}
+
+\paragraph{Inhaltsstandard}\label{inhaltsstandard}
+
+\begin{itemize}
+\tightlist
+\item
+  Welche Felder wie befüllt werden (z. B. Reihenfolge Vor- und
+  Nachnamen)
+\item
+  RSWK
+\end{itemize}
+
+\paragraph{Wertstandard}\label{wertstandard}
+
+\begin{itemize}
+\tightlist
+\item
+  Inhalt der Felder (z. B. GND)
+\end{itemize}
+
+\subsection{Opendata-Prinzipien}\label{opendata-prinzipien}
+
+\subsubsection{Open Data und
+Langzeitarchivierung}\label{open-data-und-langzeitarchivierung}
+
+\begin{itemize}
+\tightlist
+\item
+  Grundsätzliches
+\item
+  Zenodo und andere Aggregatoren und Publikationsorte
+\end{itemize}
+
+\subsubsection{FAIR-Prinzipien}\label{fair-prinzipien}
+
+\begin{itemize}
+\tightlist
+\item
+  FAIR ≠ open (in gewissen Kontexten kann Einschränkung sinnvoll sein
+  und ist in FAIR eingeschlossen!)
+\item
+  \ldots{}
+\end{itemize}
+
+\subsubsection{CARE-Prinzipien}\label{care-prinzipien}
+
+\begin{itemize}
+\tightlist
+\item
+  Die CARE-Prinzipien wurde innerhlab www.rd-alliance.org gegründet.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    C:
+  \item
+    A:
+  \item
+    R:
+  \item
+    E:
+  \end{itemize}
+\item
+  Stand Umsetzung aktuell
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Noch relativ neu und kommen deshalb erst nach und nach in Umsetzung.
+  \item
+    Ihre hohe Anziehungskraft (gerade als Komplement zu den
+    FAIR-Prinzipien) verweist jedoch auf ein grosses Bedürfnis.
+  \end{itemize}
+\item
+  Fokus:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    CARE-Prinzipien adressieren dezidiert indigene Daten, bietet jedoch
+    keinen allgemeinen Rahmen für ethischen Fragen in Bezug auf
+    Sammlungsdaten.
+  \item
+    Entsprechend stellt sich die Frage, inwieweit die CARE-Prinzipien
+    ``fliessend'' auf andere Kontexte ausgeweitet werden können, oder ob
+    die Formulierung separater Prinzipien je nach Kontext sinnvoller
+    wäre.
+  \item
+    Die CARE-Prinzipien liefern wichtige Impulse für FDM um ethische
+    Fragen im Umgang mit Forschungsdaten und -materialien zu
+    reflektieren und systematisch zu berücksichtigen.
+  \end{itemize}
+
+  \paragraph{Communities}\label{communities}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Bei der konkreten Umsetzung stellen sich Fragen wie: ``Wer sind
+    genau die \emph{Communities}?'' oder ``Wie genau bemessen wir
+    \emph{collective benefit}?'' Je nach Kontext sind diese Fragen
+    schwer zu beantworten.
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Kritische Einordnung des oftmals pauschalisierend eingesetzten
+      Community-Begriffs (vgl. z.B. Kaiser et al.~2023)
+    \item
+      Verliert eine Gruppe irgendwann die Rechte über ihre Vorfahren?
+      Wer bestimmt, woran festmachen?
+    \item
+      \ldots{}
+    \end{itemize}
+  \item
+    Beispiele nennen für andere Kontexte, e.g.~Datenschutzthematik,
+    NS-Register, heterogene Community, \ldots{}
+  \item
+    TK-Labels (Fokussieren auf Selbstbestimmung bei der Label-Vergabe im
+    Kontext von Institutions-Gatekeeping)
+  \end{itemize}
+
+  \paragraph{Diskriminierungsfrei
+  vs.~Diskriminierungssensibel}\label{diskriminierungsfrei-vs.-diskriminierungssensibel}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    ``Diskriminierungsfrei'' im alten Titel aufgreifen
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Mit dieser Differenzierung soll kein Relativismus betrieben
+      werden!
+
+      \begin{itemize}
+      \tightlist
+      \item
+        Streben hin zu Diskriminierungsfreiheit: ja, unbedingt;
+        Diskriminierungsfreiheit behaupten: nein
+      \end{itemize}
+    \item
+      Begründung
+
+      \begin{itemize}
+      \tightlist
+      \item
+        Diskriminierungsverständnis ist geografisch und
+        communityabhängig heterogen
+      \item
+        Diskriminierungsverständnis ändert sich -- auch in Zukunft
+      \item
+        Auch ``Normdaten'' verändern sich (auch die GND)
+      \item
+        Dekolonialisierung nie abgeschlossen
+      \item
+        Archiv-Lücken betonen
+      \item
+        Archiv-Geschichte bleibt
+      \item
+        Weit mehr als bloss Vokabular
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\section{Praxis: Diskriminierungssensibler Umgang mit
+Metadaten}\label{praxis-diskriminierungssensibler-umgang-mit-metadaten}
+
+\subsection{Erstellung von Metadaten}\label{erstellung-von-metadaten}
+
+\begin{itemize}
+\tightlist
+\item
+  Abgrenzen (1) Primärerschliessung, (2) Arbeiten mit Subsets
+  bestehender Metadaten -\textgreater{} in der Praxis oft eine Mischung
+  aus beidem.
+\item
+  Folgende Arbeitsschritte sind dabei stets wichtig: Inhaltsangabe
+  Folgekapitel
+\end{itemize}
+
+\subsubsection{Forschungsrahmen
+abstecken}\label{forschungsrahmen-abstecken}
+
+\begin{itemize}
+\tightlist
+\item
+  Was beschreibe ich?
+\item
+  Umfang der Metadatenerfassung (Ziel, Produkt,
+  Ressourcenmanagement~(Notwendiges vs.~nice to have, etc., für wen
+  (Zielgruppen)?)
+\item
+  Prioritätensetzung und Zeitmanagement\\
+\item
+  Erfassen und Identifizieren der Ressource(n)
+\item
+  Welche Informationen werden benötigt, um die Ressourcen in den Kontext
+  zu setzen
+\end{itemize}
+
+\subsubsection{Umgang mit bestehenden
+Metadaten}\label{umgang-mit-bestehenden-metadaten}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Situationen:} Datenrecherche mit
+  Archivkatalog/Aggregator/\ldots{}
+\item
+  \textbf{Woher stammen Metadaten:} Archive, Literatur, \ldots{}
+\item
+  \textbf{Herausforderungen:} Heterogenität, Umgang mit bestehenden
+  Diskriminierungen
+\item
+  \textbf{Strategien:} Zusammenführung vs.~Anreicherung vs.~Ausdünnung
+  vs.~komplett neu vs.~\ldots{}
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Erfahrungen von Stadt.Geschichte.Basel}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+Beispiele
+
+\end{tcolorbox}
+
+\subsubsection{Kontextualisierung der
+Ressource}\label{kontextualisierung-der-ressource}
+
+\begin{itemize}
+\tightlist
+\item
+  Entstehungskontext der Ressource
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Sozialer und politischer Kontext\\
+  \item
+    Quellenbeschreibung\\
+  \item
+    Kontexte der Primär-Autor:innen
+  \end{itemize}
+\item
+  Verwendungskontext der Ressource
+
+  \begin{itemize}
+  \tightlist
+  \item
+    In welchem Kontext/Umfang/Zustand/Verschlagwortung wird sie heute
+    zur Verfügung gestellt?
+  \item
+    Kontexte der betreuenden Archivar:innen etc.
+  \item
+    Interpretation und Rezeption in der Forschung usw. (beeinflusst etwa
+    Auffindbarkeit)
+  \end{itemize}
+\item
+  Praxis: Reflexion und Dokumentation von obigem
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Beispiele}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+Diverse Beispiele
+
+\end{tcolorbox}
+
+\subsubsection{Metadatenfelder
+festlegen}\label{metadatenfelder-festlegen}
+
+\begin{itemize}
+\tightlist
+\item
+  Was sind die Optionen?
+\item
+  Identifizieren relevanter Felder für die Bedürfnisse des Projekts
+\item
+  Übernehmen bestehender Felder
+\item
+  Ergänzen bestehender Felder mit anderen Standards und Entscheidungen
+  dokumentieren
+\item
+  Extrinsisch vs.~intrinsisch (vgl. auch Wertstandards)
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Dublin Core}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\ldots{}
+
+\end{tcolorbox}
+
+\subsubsection{Wertstandards wählen und
+verschlagworten}\label{wertstandards-wuxe4hlen-und-verschlagworten}
+
+\begin{itemize}
+\tightlist
+\item
+  Was sind die Optionen?
+\item
+  Wertstandard wählen und mit Ressourcen abgleichen
+\item
+  Anpassungen abwägen und vornehmen und Entscheidungen dokumentieren
+\item
+  Mappings: Verknüpfen verschiedener Wertstandards / Äquivalenzklassen
+\item
+  Extrinsisch vs.~intrinsisch (vgl. auch Metadatenfelder)
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Limitationen}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Das Verwenden und Ausgeben von Objektbezeichnungen in einer
+  Lokalsprache setzt voraus, dass eine 1:1-Übersetzung existiert, was
+  nicht immer der Fall ist.
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Ausschlüsse durch Mapping}, colback=white, colframe=quarto-callout-note-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  kumulative Äquivalenz
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Stolpersteine bei Begriffsauswahl}, colback=white, colframe=quarto-callout-note-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Sprachspezifische Unterschiede (Rasse/Race)
+\item
+  Kontext (Zwerg)
+\item
+  Wiederaneignungen und Selbstbeschreibungen (Crip)
+\item
+  Stehende Begriffe (e.g.~\emph{Lycaon krebsi})
+\item
+  \ldots{}
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Stolpersteine bei der Verschlagwortung}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Umgang mit Darstellungen von Nacktheit.
+  Malegaze/Objektivierung/Sexualisierung/Prüdheit/Selbstbestimmung/\ldots{}
+  (``Bad zu Leuk'', \ldots)
+\item
+  Werte-Urteile von aussen ohne Insider-Wissen
+\item
+  Gut gemeint aber\ldots{}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Neue Diskriminierungen schaffen durch\ldots{}
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Monofokus (Keltin)\\
+    \item
+      Alarmglocken (Nacktheit)\\
+    \end{itemize}
+  \end{itemize}
+\item
+  Übersetzungen (vgl. oben)\\
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{`Neue' Konzepte und historische Quellen}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Beim Verschlagworten und Beschreiben historischer Quellen sollten
+  Begriffe stets so akkurat wie möglich gewählt werden.
+\item
+  Zuweilen wird dieses Argument jedoch verwendet, um bspw. die
+  Auszeichnung potenziell nichtbinärer Menschen als ideologisch oder
+  unwissenschaftlich zu diskreditieren. Nichtbinarität sei ein
+  zeitgenössisches Konzept, heisst es dann, welches in historischen
+  Daten nichts verloren habe.
+\item
+  Dekonstruktion dieser Behauptung.
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Systematische Lücken bei Schlagwortindexen}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+(ggf. in Kapitel \emph{2-Schlüsselbegriffe} verschieben) - Beispiele:
+Gender-Open-Pendent für Kolonialitäts-Kontext, Gender-Open-Pendent
+e.g.~für Italienisch - Gründe für Fehlen: \ldots{} - Bedarf und Chancen:
+\ldots{} - Hürden: \ldots{}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Sollen wir eine eigene Ontologie erstellen?}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Erfahrungen der Stadt.Geschichte.Basel zum Einsatz von OpenGender
+
+  \begin{itemize}
+  \tightlist
+  \item
+    nur OpenGender Schlagwortindex?
+  \item
+    interne Strategie
+  \end{itemize}
+\item
+  Chancen: \ldots{}
+\item
+  Gefahren: \ldots{}
+\item
+  Notwendigkeit: es fehlen viele Indexe (vgl. Box ``systematische Lücken
+  bei Schlagwortindexen'')
+\item
+  Strategien und Alternativen
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Kombination/Mapping verschiedener Indexe (vgl. nächste Box)
+  \item
+    Subset erstellen
+  \end{itemize}
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Best Practices für Mappings}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Tipps, Ressourcen und Aggregatoren
+\item
+  GND-OpenGender-Mapping
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsubsection{Transparente Metadaten: Versionierung und
+Dokumentation}\label{transparente-metadaten-versionierung-und-dokumentation}
+
+\begin{itemize}
+\tightlist
+\item
+  Relevanz
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Wer hat wann und wieso welche Metadaten erstellt/geändert?
+  \item
+    \emph{``Wie dokumentieren wir, wie wir selber erschliessen? (In 50
+    Jahren wird auch das wieder interessieren und in Frage gestellt
+    werden.)''} Tobias Wildi (Rückmeldung per Linkedin)
+  \item
+    \emph{``Veraltete Metadaten sollen nicht einfach gelöscht, sondern
+    durch neue aktuelle Beschreibungen überlagert werden. Es muss
+    möglich sein, die Entwicklung verschiedener Generationen von
+    Metadaten über die Zeit nachzuverfolgen, denn an ihnen manifestiert
+    sich, wie wir Dinge benennen und über sie denken. Und die Welt steht
+    wie gesagt nicht still, die heute angefertigten Metadaten werden
+    nicht die letzten sein. Zukünftige Generationen werden ihrerseits
+    aus unseren Metadaten auf unsere gesellschaftlichen Verhältnisse und
+    Wertvorstellen rückschliessen. Diese Nachvollziehbarkeit ist aber
+    nur möglich, wenn alte Metadaten nicht gelöscht, sondern versioniert
+    werden und ihr Entstehungskontext dokumentiert wird.''} Tobias Wildi
+    (Rückmeldung per Linkedin)
+  \item
+    Historische Nachvollziehbarkeit: \emph{``Unter welchen Umständen und
+    durch welche Personen sind Metadaten mit Begrifflichkeiten und
+    Weltvorstellungen entstanden, von denen wir uns heute abgrenzen?''}
+    Tobias Wildi (Rückmeldung per Linkedin)
+  \end{itemize}
+\item
+  Umsetzung
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Technische Integration in bestehende Sammlungsmanagement-Tools
+  \item
+    Automatisierbarkeit
+  \end{itemize}
+\item
+  Abwägungen
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Detailgrad
+  \item
+    Sichtbarkeit nach aussen (siehe unten)
+  \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Beispiel für technische/konzeptuelle Umsetzung Versionierung}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  \ldots{}
+\item
+  Mindestanforderungen
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Zugriff via (Volltext)suche (vgl. unten)
+  \item
+    ``This content was machine translated''
+  \end{itemize}
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Beispiel für technische/konzeptuelle Umsetzung Dokumentation}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  \ldots{}
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Wohin mit der Dokumentation}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Gehört eine Dokumentation in jede einzelne Ressource oder reicht es,
+  eine zentrale Dokumentation für einen ganzen Datensatz anzulegen?
+\item
+  Wie kann nebst den Daten auch die Dokumentation interoperabel
+  gestaltet werden?
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsubsection{Umgang mit Nicht-Wissen}\label{umgang-mit-nicht-wissen}
+
+\paragraph{Lücken und Unsicherheiten in
+Quellen}\label{luxfccken-und-unsicherheiten-in-quellen}
+
+\begin{itemize}
+\tightlist
+\item
+  Sammlungslücken und fehlende Metadaten/Informationen sind auch eine
+  wichtige Information!
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Beispiele aus e.g.~Militär-Archiven sowie aus Provenienzforschung
+    bringen.
+  \item
+    Problematik der Unsichtbarmachung im Archiv (hier bloss Verweis auf
+    Schlüsselbegriffe)
+  \end{itemize}
+\item
+  Leerstellen: Zum Umgang beim Leerlassen von Metadatenfeldern:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    ggf. sollte Absicht hinter dem Leerlassen dokumentiert werden, denn
+    Info existiert nicht ≠ Info nicht gefunden ≠ Datensatz nicht/nur
+    teilweise bearbeitet.
+  \item
+    analoges gilt für Tagging von Beständen als un/problematisch.
+  \end{itemize}
+\item
+  Qualifikation der Metadaten: Zum Umgang mit Unsicherheiten:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    z.B. unsichere oder unleserliche Quelle ≠ widersprüchliche,
+    fragwürdie oder umstrittene Quellenlage
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Expertisen einholen und
+einbinden}\label{expertisen-einholen-und-einbinden}
+
+\begin{itemize}
+\tightlist
+\item
+  Expertisen identifizieren.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Wer hat Autorität, (mit)zubestimmen? (vgl.
+    \emph{2-Schlüsselbegriffe/Communities})
+  \end{itemize}
+\item
+  Eigene Positioniertheit reflektieren
+\item
+  Wechselseitige Machtdynamiken, Interessen, Bedürfnisse und
+  Verletzlichkeiten reflektieren (auf beiden Seiten)
+\item
+  Potenziale, Formen (auch Grenzen) von Dialog und Mitbestimmung
+  gemeinsam ausloten
+\item
+  Settings herstellen um Expertise optimal einzuholen
+\item
+  Umgang mit sich widersprechenden Sichtweisen bzw. Bedürfnissen (ggf.
+  auch innerhalb einer ``Community'')
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Zur Problematik des oftmals pauschalisierend eingesetzten
+    Community-Begriffs, siehe \emph{2-Schlüsselbegriffe/Communities}
+  \item
+    Interessensabwägung
+  \item
+    Dokumentieren in Freitextfeld
+  \item
+    \ldots{}
+  \end{itemize}
+\end{itemize}
+
+\subsubsection{Umgang mit LLMs}\label{umgang-mit-llms}
+
+(Nicht im Fokus von Handbuch 2.0 → Verweisen auf Handbuch 3.0)
+
+\begin{itemize}
+\tightlist
+\item
+  Dringlichkeit, dieses Kapitel ins Handbuch aufzunehmen
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Vorstellung ist verbreitet, AI könne Verschlagwortung übernehmen
+  \item
+    Sensibilisierung für Biases in Trainingsdaten
+  \item
+    Metadaten für LLM optimiert publizieren als Teil von FAIR-Data?
+    (machinereadable/LLM-readable data)
+  \item
+    Umgang mit bereits bestehenden AI-generierten Metadaten
+
+    \begin{itemize}
+    \tightlist
+    \item
+      wie erkennen?
+    \item
+      worauf achten?
+    \item
+      wie markieren/dokumentieren?
+    \end{itemize}
+  \end{itemize}
+\item
+  Publizieren von Metadaten
+\item
+  AI-Tools
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Diskussion bestehender Tools
+
+    \begin{itemize}
+    \tightlist
+    \item
+      DE-BIAS-Tool
+    \item
+      \ldots{}
+    \end{itemize}
+  \item
+    Chancen von und Anforderungen an AI-Tools
+
+    \begin{itemize}
+    \tightlist
+    \item
+      man-in-the-loop
+    \end{itemize}
+  \item
+    Grenzen von AI-Tools
+
+    \begin{itemize}
+    \tightlist
+    \item
+      Umgang mit Halluzinationen.
+    \item
+      Autor:innenschaft / Haftungsprobleme mit vollautomatisch
+      eingesetzter KI
+    \end{itemize}
+  \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Positive Erfahrungen aus der Praxis}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Beispiele sammeln
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Negative Erfahrungen aus der Praxis}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Beispiele sammeln
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsection{Zugang und Publikation}\label{zugang-und-publikation}
+
+\begin{itemize}
+\tightlist
+\item
+  Metadaten machen Anschein, alles sei suchbar und da. Doch nein!
+\item
+  Bei Publikation von Metadaten muss stets auch Rezeptionsebene
+  mitgedacht werden -- ganz besonders z.B. auf Sammlungsportalen.
+\item
+  Im Kontext sensibler Daten geht es dabei auch um Fragen von Zugang
+\item
+  Und im Kontext von Open Data und Aggregatoren auch um die Frage,
+  inwiefern eine diskriminierungssensible Weitergabe und Präsentation
+  von Daten gefördert werden kann.
+\end{itemize}
+
+\subsubsection{Rahmen abstecken}\label{rahmen-abstecken}
+
+\begin{itemize}
+\tightlist
+\item
+  Metadaten als Findhilfe? Oder mehr?
+\end{itemize}
+
+\subsubsection{Umgang mit sensiblen und/oder diskriminierenden
+Inhalten}\label{umgang-mit-sensiblen-undoder-diskriminierenden-inhalten}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Was:} Sensible vs.~diskriminierende Daten
+\item
+  \textbf{Wirkung:}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Trigger vermeiden vs.
+  \item
+    Schutz vulnerabler Einzelpersonen/Menschengruppen/Kulturgut vs.~
+  \item
+    Reproduktion diskriminierender Narrative
+  \end{itemize}
+\item
+  \textbf{Ebenen:} Rechtslage vs.~Ethik (es geht um Sicherheit, aber
+  auch um Würde)
+\item
+  \textbf{Abwägung:} Potenzieller Intersssenskonflikt zwischen (1)
+  Zugang erleichtern und (2) Schaden vermeiden (nicht immer einfach)
+\end{itemize}
+
+\paragraph{Identifizieren sensibler
+Daten}\label{identifizieren-sensibler-daten}
+
+\begin{itemize}
+\tightlist
+\item
+  Beispiele
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Geodaten:} So kann es etwa Sinn machen, Fundorte
+    archäologischer Objekte nicht öffentlich zu machen, um Risiko von
+    Plünderungen zu reduzieren\\
+  \item
+    \textbf{Personendaten im Archiv:} sensible Informationen
+    lebender/toter Personen Objekte (z.B.
+    Aufenthaltsorte/Interviewtranskripte mit Nachfahren, Zeitzeug:innen,
+    \ldots)
+  \item
+    \textbf{Personendaten der Archivar:innen:} Transparenz liefert
+    wohlverdiente Sichtbarkeit für Sachbearbeiter:innen, exponiert sie
+    aber gleichzeitig auch. Ggf. Kürzel statt Klarnamen verwenden
+  \end{itemize}
+\item
+  Rechtliche/Ethische Grundsätze
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \ldots{}
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Identifizieren diskriminierender
+Daten}\label{identifizieren-diskriminierender-daten}
+
+\begin{itemize}
+\tightlist
+\item
+  Beispiele
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Diskriminierende Beschreibungen:} \ldots{}
+  \item
+    \textbf{Zuschreibungen und Stereotypisierungen:} \ldots{}
+  \end{itemize}
+\item
+  Rechtliche/Ethische Grundsätze
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \ldots{}
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Strategien zum
+Zugangs-Management}\label{strategien-zum-zugangs-management}
+
+\begin{itemize}
+\tightlist
+\item
+  Grundsätzlich: Was zeigen wir wem wie weshalb und unter welchen
+  Bedingungen?
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Betrifft ein Datenportal genauso wie dieses Handbuch
+  \item
+    \textbf{Wer:} Unterschiedliche Zugänge für verschiedene Zielpublika
+    (Menschen mit spezifischer Forschungsfrage, Online-Datenbank, Dialog
+    mit ``Herkunftsgesellschaften'', Web-Crawlers, \ldots)
+  \item
+    \textbf{Worauf:} Vollzugriff vs.~Kontextualisierung vs.~Teilzugriff
+    vs.~Versionsgeschichte
+  \item
+    \textbf{Kontextualisierung:} Unter welcher Frage/Suchbegriffen soll
+    ein bestimmter Inhalt (z.B. ein Bild) gefunden werden? (z.B.
+    ``Antisemitismus'' oder ``jüdische Menschen''?)
+  \end{itemize}
+\item
+  \textbf{Umgang mit Bildern}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Relevant für Portale, Ausstellungen, Slides auf Vorträgen
+  \item
+    Entsprechende Überlegungen sollten auch an einer Fachtagungen
+    gemacht werden (z.B. beim zeigen rassistischer Praktiken auf
+    Bildern)
+  \end{itemize}
+\item
+  \textbf{Umgang mit Text}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Strategien: Verfremdung, Verzerrung, Durchstreichung,
+    Sternchenbarriere (N***), Änderung, Anführungszeichen
+  \item
+    Diskussion: Rücksicht mit historischem Kontext
+  \item
+    Diskussion zu Titeln
+  \end{itemize}
+\item
+  \textbf{Umgang mit Biased Perspektiven}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Reproduktion von Blickregimen (z.B. in der
+    \href{https://www.deutschefotothek.de/cms/weltsichten.xml}{Deutschen
+    Fotothek})
+  \item
+    Auswahl von Touren / Eingangsnarrativen / Kontextualisierungen (und
+    Kontextualisierungsprinzipien!!) / bewussten Umwegen /
+    Bildminiaturen
+  \end{itemize}
+\item
+  \textbf{Umgang mit Lücken}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Explizieren, dass bspw. Namen von Personen unbekannt (bzw. nicht
+    archiviert/notiert/als erwähnenswert befunden worden)
+  \end{itemize}
+\item
+  \textbf{Zugangsbeschränkung}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    API-Key als (symbolische) Hürde
+  \item
+    Content-Notes/Disclaimer
+
+    \begin{itemize}
+    \tightlist
+    \item
+      MARC-Feld 500
+    \item
+      Kommentar zu Länge, Detailgrad, Inhalt
+    \item
+      User wählen lassen, ob sie spezifische Inhalte sehen wollen
+      (CSS-Media-Feature)
+    \end{itemize}
+  \end{itemize}
+\item
+  \textbf{Schutz von Datenbanken vor unbefugtem Zugriff}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Verantwortung
+  \end{itemize}
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Erfahrungen}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Umgang mit Zensurvorwürfen beim Markieren/Kontextualisieren
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Beispiel Stadtbücherei Münster:
+    \href{https://www.rtl.de/cms/muenster-warnhinweise-in-stadtbuecherei-sorgen-fuer-diskussionen-5095758.html}{Link}
+  \end{itemize}
+\item
+  GND
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Umgang mit veralteten/alternativen Begriffen
+  \item
+    RSWK erwähnt Datenethik nicht
+  \item
+    Problematik Verwendungshäufigkeit: z.B. ``I---'', welches noch
+    häufig verwendet wird?
+  \end{itemize}
+\item
+  \ldots{}
+\end{itemize}
+
+\end{tcolorbox}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Umgang mit Zitaten und Titeln}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Vorstellung, dass Werk/Ressource nur \emph{einen} Titel haben kann,
+  hat grundsätzlich keinen ontologischen Grund. D.h. es ist durchaus
+  möglich, problematische Titel zu ändern!
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Beispiele
+  \end{itemize}
+\item
+  Sternchenbarrieren (N***) in Titeln
+
+  \begin{itemize}
+  \tightlist
+  \item
+    möglich solange kommentiert und falls wissenschaftliche
+    Volltextsuche auf Volltext (und ggf. Versionen) zugreifen kann.
+  \end{itemize}
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsection{Handlungsfähig bleiben}\label{handlungsfuxe4hig-bleiben}
+
+\begin{itemize}
+\tightlist
+\item
+  \emph{``Es ist halt schlicht unmöglich, komplett diskriminierungsfrei
+  zu sein.''}
+\item
+  \emph{``Dann können wir ja gar nichts mehr veröffentlichen''}
+\item
+  Plädoyer für konstruktiven und proaktiven Umgang aus der ``Komplett
+  biasfreie Daten sind doch eh nicht möglich''-Blockade raus, ohne
+  Extremszenarien gegeneinander auszuspielen.
+\item
+  Gleichzeitig Warnung vor ``es sich mit Kompromissen zu einfach
+  machen''.
+\end{itemize}
+
+\subsubsection{Typische Widerstände und
+Konflikte}\label{typische-widerstuxe4nde-und-konflikte}
+
+\begin{itemize}
+\tightlist
+\item
+  Es kann herausfordernd und persönlich belastend sein, Widerstand zu
+  leisten und kritische Positionen konstruktiv einzubringen.
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Dieses Kapitel des Handbuchs dient dem Teilen oft gehörter
+    Widerstände und Konflikte, und Strategien, wie diese aufgelöst
+    werden können.
+  \end{itemize}
+\end{itemize}
+
+\paragraph{Widerstände im
+Team/Institution}\label{widerstuxe4nde-im-teaminstitution}
+
+\begin{quote}
+``Komplett biasfreie Daten sind doch eh nicht möglich''
+\end{quote}
+
+\begin{quote}
+``2015 waren die Diskurse noch nicht da''
+\end{quote}
+
+\begin{quote}
+``Ich finde es ja toll, was ihr hier zu Datenethik diskutiert. Aber in
+der Praxis uns fehlt einfach die Zeit dazu''
+\end{quote}
+
+\begin{quote}
+``Welche Missbrauchsfälle sind euch bekannt?''
+\end{quote}
+
+\begin{itemize}
+\tightlist
+\item
+  Falsche Frage, wenn es um Reproduktion von Narrativen geht. Hier geht
+  es nicht um böse Absichten, sondern um schleichende aber machtvolle
+  Prozesse. Entsprechend sollten nicht Einzelfälle gesucht (und nicht
+  gefunden) werden.
+\end{itemize}
+
+\begin{quote}
+``Wir wissen nicht, wen wir fragen sollten. Und die
+Ursprungsgemeinschaften erreichen wir ja eh nicht.''
+\end{quote}
+
+\begin{quote}
+``Das ist technisch halt nicht möglich''
+\end{quote}
+
+\begin{quote}
+``Wir haben jetzt schon zu viele Metadatenfelder.''
+\end{quote}
+
+\begin{quote}
+``Gender ist ein neues Konzept und gehört nicht in historischen
+Metadaten''
+\end{quote}
+
+\begin{itemize}
+\tightlist
+\item
+  vgl. Box oben in ``Erstellen von Metadaten''
+\end{itemize}
+
+\begin{quote}
+``Als Museum sind wir der Objektivität verpflichtet. Wir machen keinen
+politischen Aktivismus''
+\end{quote}
+
+\begin{quote}
+``Als Doktorand:in finde ich es abschreckend, eine lange Checkliste
+vorgesetzt zu kriegen.''
+\end{quote}
+
+\begin{itemize}
+\tightlist
+\item
+  CARE-Prinzipien als anregende Frage- und Reflexionsliste einführen
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Wir sammeln weitere Statements}, colback=white, colframe=quarto-callout-note-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  bitte melden per Email oder Pullrequest
+\end{itemize}
+
+\end{tcolorbox}
+
+\paragraph{Konflikte auf
+Förderebene}\label{konflikte-auf-fuxf6rderebene}
+
+\begin{quote}
+``Wir hätten Projektfinanzierung nicht erhalten, hätten wir die Bilder
+nicht vollumfassend offen publiziert.''
+\end{quote}
+
+\begin{quote}
+``Wir brauchen ein Endprodukt''
+\end{quote}
+
+\begin{quote}
+``Uns sind die Hände gebunden''
+\end{quote}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Wir sammeln weitere Statements}, colback=white, colframe=quarto-callout-note-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  bitte melden per Email oder Pullrequest
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsubsection{Wie weiter mit abgeschlossenen
+Projekten?}\label{wie-weiter-mit-abgeschlossenen-projekten}
+
+\begin{itemize}
+\tightlist
+\item
+  Bestehende Plattformen werden (aktuellen) Ansprüchen zu
+  diskriminierungssensiblem Umgang oft nicht gerecht.
+\item
+  Leider fehlt es oft an Zeit und Finanzierung, um Änderungen
+  vorzunehmen. Oder es können technische, personelle oder
+  institutionspolitische Hürden bestehen.
+\item
+  Kritische Auseinandersetzung mit bestehenden Projekte kann sehr
+  produktiv sein, da es auf potenzielle Hürden zukünftiger Projekte
+  sensibilisiert.
+\item
+  Gleichzeitig stellt sich die Frage, wie mit abgeschlossenen Projekten
+  umzugehen ist. Denn wenn datenethische Grundsätze verpflichten zu
+  Aktion zur Reduktion von Schaden.
+\item
+  Konkret kann dies heissen: \ldots{}
+\end{itemize}
+
+\section{Literatur}\label{literatur}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-australianresearchdatacommonsardc2020a}
+Australian Research Data Commons (ARDC). 2020. {«{ARDC Metadata
+Guide}»}, März. \url{https://doi.org/10.5281/ZENODO.6459832}.
+
+\bibitem[\citeproctext]{ref-baca2016}
+Baca, Murtha. 2016. \emph{Introduction to Metadata}. Herausgegeben von
+Murtha Baca. 3. Aufl. Los Angeles: Getty Publications.
+\url{http://www.getty.edu/publications/intrometadata}.
+
+\bibitem[\citeproctext]{ref-carroll2021}
+Carroll, Stephanie Russo, Edit Herczog, Maui Hudson, Keith Russell, und
+Shelley Stall. 2021. {«Operationalizing the {CARE} and {FAIR Principles}
+for {Indigenous} Data Futures»}. \emph{Scientific Data} 8 (1): 108.
+\url{https://doi.org/10.1038/s41597-021-00892-0}.
+
+\bibitem[\citeproctext]{ref-davis2021a}
+Davis, Edie, und Bahareh Heravi. 2021. {«Linked {Data} and {Cultural
+Heritage}: {A Systematic Review} of {Participation}, {Collaboration},
+and {Motivation}»}. \emph{Journal on Computing and Cultural Heritage} 14
+(2): 1--18. \url{https://doi.org/10.1145/3429458}.
+
+\bibitem[\citeproctext]{ref-dogtas2022}
+Doğtaş, Gürsoy, Marc-Paul Ibitz, Fatima Jonitz, Veronika Kocher, Astrid
+Poyer, und Laurenz Stapf. 2022. {«Kritik an rassifizierenden und
+diskriminierenden Titeln und Metadaten -- Praxisorientierte
+Lösungsansätze»}. \emph{027.7 Zeitschrift für Bibliothekskultur /
+Journal for Library Culture} 9 (4).
+\url{https://doi.org/10.21428/1bfadeb6.abe15b5e}.
+
+\bibitem[\citeproctext]{ref-freire2019a}
+Freire, Nuno, Pável Calado, und Bruno Martins. 2019. {«Availability of
+{Cultural Heritage Structured Metadata} in the {World Wide Web}»}. In
+\emph{Connecting the {Knowledge Commons} --- {From Projects} to
+{Sustainable Infrastructure}}, herausgegeben von Leslie Chan und Pierre
+Mounier, 121--33. OpenEdition Press.
+\url{https://doi.org/10.4000/books.oep.9024}.
+
+\bibitem[\citeproctext]{ref-sgg2023}
+Gabay, Simon, Tobias Hodel, Moritz Mähr, Stefan Nellen, Barbara
+Roth-Lochner, Pascale Sutter, Andrea Voellmin, und Karin von Wartburg.
+2023. {«Datenstandards Für Die Historische {Forschung} -- {Ein
+White-Paper} Der {Schweizerischen Gesellschaft} Für {Geschichte}»}.
+Herausgegeben von Schweizerische Gesellschaft für Geschichte.
+\emph{Whitepaper}, November.
+\url{https://doi.org/10.5281/ZENODO.10122052}.
+
+\bibitem[\citeproctext]{ref-gruber2022a}
+Gruber, Andrea. 2022. {«Vom Knüpfen feministischer Begriffsnetze:
+Ariadnes Faden \& geschlechtersensible Normdaten»}. \emph{Mitteilungen
+der Vereinigung Österreichischer Bibliothekarinnen und Bibliothekare} 75
+(1): 262--88. \url{https://doi.org/10.31263/voebm.v75i1.7213}.
+
+\bibitem[\citeproctext]{ref-heinrich2018}
+Heinrich, Andreas, und Anita Runge. 2018. {«GenderOpen: Ein Repositorium
+für die Geschlechterforschung»}. \url{https://doi.org/10.25595/584}.
+
+\bibitem[\citeproctext]{ref-jaffeb}
+Jaffe, Rachel. o.~J. {«Library {Guides}: {Metadata Creation}»}. Guide.
+Zugegriffen 5. Mai 2024.
+\url{https://guides.library.ucsc.edu/c.php?g=618773&p=4306381}.
+
+\bibitem[\citeproctext]{ref-lampe2021}
+Lampe, Moritz. 2021. \emph{Diskriminierende Begriffe und
+Wissensordnungen im Bildarchiv}. Berliner handreichungen zur
+bibliotheks- und informationswissenschaft 481. Berlin: Institut für
+Bibliotheks- und Informationswissenschaft der Humboldt-Universität zu
+Berlin. \url{https://doi.org/10.18452/23766}.
+
+\bibitem[\citeproctext]{ref-sparber2016a}
+Sparber, Sandra. 2016. {«What's the frequency, Kenneth? -- Eine
+(queer)feministische Kritik an Sexismen und Rassismen im
+Schlagwortkatalog»}. \emph{Mitteilungen der Vereinigung Österreichischer
+Bibliothekarinnen und Bibliothekare} 69 (2): 236--43.
+\url{https://doi.org/10.31263/voebm.v69i2.1629}.
+
+\bibitem[\citeproctext]{ref-staunton2021}
+Staunton, Ciara, Carlos Andrés Barragán, Stefano Canali, Calvin Ho,
+Sabina Leonelli, Matthew Mayernik, Barbara Prainsack, und Ambroise
+Wonkham. 2021. {«Open Science, Data Sharing and Solidarity: Who
+Benefits?»} \emph{History and Philosophy of the Life Sciences} 43 (4):
+115. \url{https://doi.org/10.1007/s40656-021-00468-6}.
+
+\bibitem[\citeproctext]{ref-musis2024}
+Team MusIS. o.~J. {«Regelwerke, Thesauri, Klassifikationen, Systematiken
+und Begriffslisten»}. Wiki. BSZ Wiki. Zugegriffen 5. Mai 2024.
+\url{https://wiki.bsz-bw.de/display/MUSIS/Regelwerke\%2C+Thesauri\%2C+Klassifikationen\%2C+Systematiken+und+Begriffslisten}.
+
+\bibitem[\citeproctext]{ref-community2022a}
+The Turing Way Community. 2022. {«The {Turing Way}: {A} Handbook for
+Reproducible, Ethical and Collaborative Research»}.
+\url{https://doi.org/10.5281/ZENODO.3233853}.
+
+\bibitem[\citeproctext]{ref-wilkinson2016}
+Wilkinson, Mark D., Michel Dumontier, IJsbrand Jan Aalbersberg,
+Gabrielle Appleton, Myles Axton, Arie Baak, Niklas Blomberg, u.~a. 2016.
+{«The {FAIR Guiding Principles} for Scientific Data Management and
+Stewardship»}. \emph{Scientific Data} 3 (1): 160018.
+\url{https://doi.org/10.1038/sdata.2016.18}.
+
+\bibitem[\citeproctext]{ref-zhang2022a}
+Zhang, Lei. 2022. {«Empowering Linked Data in Cultural Heritage
+Institutions: {A} Knowledge Management Perspective»}. \emph{Data and
+Information Management} 6 (3): 100013.
+\url{https://doi.org/10.1016/j.dim.2022.100013}.
+
+\end{CSLReferences}
+
+\section{Anhang}\label{anhang}
+
+\subsection{Checkliste}\label{checkliste}
+
+\begin{itemize}
+\tightlist
+\item
+  \ldots{}
+\end{itemize}
+
+\subsection{Nützliche Tools}\label{nuxfctzliche-tools}
+
+\subsubsection{Handbücher und
+Leitfäden}\label{handbuxfccher-und-leitfuxe4den}
+
+\begin{itemize}
+\tightlist
+\item
+  Reader for Black Lives Philadephia
+\end{itemize}
+
+\subsubsection{GND-Viewers}\label{gnd-viewers}
+
+\begin{itemize}
+\tightlist
+\item
+  Kommentar Vorteile und Nachteile (z. B. des GND-Explorers)\\
+\item
+  \href{https://swb.bsz-bw.de/DB=2.104/?COOKIE=Us998,Pbszgast,I2017,B20728+,SY,NRecherche-DB,D2.104,E6b0d3db2-1,A,H,R178.197.206.37,FY}{https://swb.bsz-bw.de/}\\
+\item
+  GND-wiki der dnb\\
+\item
+  Regelwerk\\
+\item
+  Theoriebox
+\end{itemize}
+
+\subsubsection{Ontologien und Mappings}\label{ontologien-und-mappings}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://terminology-view.lido-schema.org/vocnet/?startNode=lido00409&lang=en&uriVocItem=http://terminology.lido-schema.org/eventType}{LIDO}
+\item
+  Iconclass (ruft Community aktiv auf, sich antidiskriminierend zu
+  beteiligen)\\
+\item
+  \url{https://wiki.dnb.de/display/GND/GND-Mappings+zu+externen+Thesauri}\strut \\
+\item
+  Link zum Opengender-Mapping (externe Publikation)
+\end{itemize}
+
+\subsection{\texorpdfstring{Metadaten aus dem Projekt
+\emph{Stadt.Geschichte.Basel}}{Metadaten aus dem Projekt Stadt.Geschichte.Basel}}\label{metadaten-aus-dem-projekt-stadt.geschichte.basel}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-tip-color!10!white, rightrule=.15mm, coltitle=black, left=2mm, opacitybacktitle=0.6, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Erfahrungen Stadt.Geschichte.Basel}, colback=white, colframe=quarto-callout-tip-color-frame, opacityback=0, titlerule=0mm, leftrule=.75mm, breakable, bottomtitle=1mm, bottomrule=.15mm, arc=.35mm, toprule=.15mm]
+
+\begin{itemize}
+\tightlist
+\item
+  Metadatenobjekte (Eltern)\\
+\item
+  Zugeordnete Ressourcen (Kinder)
+\item
+  Relation von Objekt und Media\\
+\end{itemize}
+
+\end{tcolorbox}
+
+
+
+
+\end{document}
