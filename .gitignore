@@ -1,3 +1,9 @@
+# Exclude local build files
+*.aux
+*.log
+*.pdf
+*.tex
+
 # Exclude example.env
 !example.env
 

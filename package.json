@@ -1,8 +1,8 @@
 {
-	"name": "diskriminierungsfreie-metadaten",
-	"description": "Handbuch zur Erstellung diskriminierungsfreier Metadaten für historische Quellen und Forschungsdaten. Erfahrungen aus dem geschichtswissenschaftlichen Forschungsprojekt Stadt.Geschichte.Basel",
-	"author": "Moritz Mähr <moritz.maehr@unibas.ch>",
-	"url": "https://github.com/maehr/diskriminierungsfreie-metadaten/issues",
+	"name": "diskriminierungssensible-metadaten",
+	"description": "Handbuch zur Erstellung diskriminierungssensibler Metadaten für historische Quellen und Forschungsdaten. Erfahrungen aus dem geschichtswissenschaftlichen Forschungsprojekt Stadt.Geschichte.Basel",
+	"author": "Levyn Bürki (levyn.buerki@unibe.ch), Moritz Mähr (moritz.maehr@unibas.ch), Noëlle Schnegg (noelle.schnegg@unibas.ch)",
+	"url": "https://maehr.github.io/diskriminierungsfreie-metadaten/issues",
 	"license": "AGPL-3.0",
 	"scripts": {
 		"check": "prettier --ignore-path .gitignore  --check . '!{CODE_OF_CONDUCT.md,LICENSE-AGPL.md,LICENSE-CCBYSA.md,_layouts/default.html,package-lock.json,pnpm-lock.yaml,yarn.lock}'",
@@ -12,12 +12,12 @@
 		"changelog": "npm exec git-cliff -- --config cliff.toml"
 	},
 	"devDependencies": {
-		"commitizen": "^4.3.0",
+		"commitizen": "^4.3.1",
 		"cz": "^1.8.2",
 		"cz-conventional-changelog": "^3.3.0",
-		"git-cliff": "^2.4.0",
-		"husky": "^9.1.4",
-		"prettier": "^3.3.3"
+		"git-cliff": "^2.8.0",
+		"husky": "^9.1.7",
+		"prettier": "^3.5.3"
 	},
 	"type": "module",
 	"config": {
